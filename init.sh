@@ -220,7 +220,7 @@ function create_pointercal()
 function init_tscal()
 {
 	case "$PRODUCT" in
-		T91|T101|ET2002|74499FU|945GSE-ITE8712|CF-19[CDY]*)
+		T91|T101|ET2002|74499FU|945GSE-ITE8712|CF-19[CDYFGKLP]*)
 			create_pointercal
 			return
 			;;
