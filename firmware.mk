@@ -8,7 +8,7 @@
 #      http://www.apache.org/licenses/LICENSE-2.0
 #
 
-LOCAL_FIRMWARES_DIR ?= /lib/firmware
+LOCAL_FIRMWARES_DIR ?= device/generic/common/firmware
 LOCAL_FIRMWARES ?= $(filter-out %.mk,$(subst $(LOCAL_FIRMWARES_DIR)/,,$(shell find $(LOCAL_FIRMWARES_DIR) -type f)))
 
 PRODUCT_COPY_FILES := \
