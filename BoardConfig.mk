@@ -28,7 +28,10 @@ endif
 TARGET_PRELINK_MODULE := false
 TARGET_NO_KERNEL ?= false
 TARGET_NO_RECOVERY ?= true
-TARGET_EXTRA_KERNEL_MODULES := 8723au tp_smapi
+TARGET_EXTRA_KERNEL_MODULES := tp_smapi
+ifneq ($(filter efi_img,$(MAKECMDGOALS)),)
+TARGET_KERNEL_ARCH ?= x86_64
+endif
 
 BOARD_USES_GENERIC_AUDIO ?= false
 BOARD_USES_ALSA_AUDIO ?= true
@@ -74,4 +77,4 @@ TARGET_HARDWARE_3D := true
 BOARD_EGL_CFG ?= device/generic/common/gpu/egl_mesa.cfg
 endif
 
-BOARD_KERNEL_CMDLINE := root=/dev/ram0 androidboot.hardware=$(TARGET_PRODUCT) video=-16
+BOARD_KERNEL_CMDLINE := root=/dev/ram0 androidboot.hardware=$(TARGET_PRODUCT)
