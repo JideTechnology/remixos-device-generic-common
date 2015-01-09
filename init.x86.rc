@@ -45,6 +45,10 @@ on init
 
     exec /system/bin/logwrapper /system/bin/sh /system/etc/init.sh
 
+on fs
+    mount_all /fstab.${ro.hardware}
+    setprop ro.crypto.fuse_sdcard true
+
 on post-fs-data
     sysclktz 1
 
@@ -80,12 +84,6 @@ on boot
     setprop persist.sys.strictmode.disable 1
     # workaround for h.265 slowness
     setprop sys.media.vdec.drop 0
-
-on fs
-    setprop ro.crypto.fuse_sdcard true
-    # manually start class late_start since we don't use mount_all
-    class_start main
-    class_start late_start
 
 service wpa_supplicant /system/bin/wpa_supplicant -c/data/misc/wifi/wpa_supplicant.conf \
     -ddddd \

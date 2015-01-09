@@ -1,0 +1,6 @@
+none	/cache			tmpfs	nosuid,nodev,noatime	defaults
+
+auto	/storage/usb0	vfat	none	wait,noemulatedsd,voldmanaged=usb0:auto
+auto	/storage/usb1	vfat	none	wait,noemulatedsd,voldmanaged=usb1:auto
+auto	/storage/usb2	vfat	none	wait,noemulatedsd,voldmanaged=usb2:auto
+auto	/storage/usb3	vfat	none	wait,noemulatedsd,voldmanaged=usb3:auto
