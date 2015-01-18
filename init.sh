@@ -48,6 +48,7 @@ function init_hal_bluetooth()
 	rmmod ath3k
 	rmmod btusb
 	rmmod bluetooth
+	set_property ro.rfkilldisabled 1
 }
 
 function init_hal_camera()
