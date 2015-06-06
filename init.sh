@@ -20,6 +20,7 @@ function init_misc()
 
 	case "$PRODUCT" in
 		T10*TA)
+			modprobe ak8975
 			;;
 		*)
 			;;
@@ -206,11 +207,9 @@ function init_hal_sensors()
 
 	# has sensor-hub?
 	for i in /sys/bus/iio/devices/iio:device?; do
-		if [ -e $i/in_accel_scale ]; then
-			busybox chown -R 1000.1000 /sys/bus/iio/devices/iio:device?/
-			hal_sensors=hsb
-			break
-		fi
+		busybox chown -R 1000.1000 /sys/bus/iio/devices/iio:device?/
+		lsmod | grep -q hid_sensor_accel_3d && hal_sensors=hsb || hal_sensors=iio
+		break
 	done
 
 	set_property ro.hardware.sensors $hal_sensors
