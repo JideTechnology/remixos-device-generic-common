@@ -103,5 +103,5 @@ $(call inherit-product,frameworks/native/build/tablet-10in-xhdpi-2048-dalvik-hea
 # Get GMS
 $(call inherit-product-if-exists,vendor/google/products/gms.mk)
 
-# Get Arm translator
-$(call inherit-product-if-exists,vendor/intel/houdini/houdini.mk)
+# Get native bridge settings
+$(call inherit-product-if-exists,$(LOCAL_PATH)/nativebridge/nativebridge.mk)
