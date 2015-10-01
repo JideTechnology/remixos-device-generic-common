@@ -16,7 +16,7 @@ LOCAL_MODULE := libnb
 LOCAL_SRC_FILES := src/libnb.cpp
 LOCAL_CFLAGS := -Werror -Wall
 LOCAL_CPPFLAGS := -std=c++11
-LOCAL_SHARED_LIBRARIES := libdl liblog
+LOCAL_SHARED_LIBRARIES := libcutils libdl liblog
 LOCAL_MULTILIB := both
 
 include $(BUILD_SHARED_LIBRARY)

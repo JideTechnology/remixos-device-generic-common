@@ -118,8 +118,9 @@ service iprenew_eth0 /system/bin/dhcpcd -n
     disabled
     oneshot
 
-service enable_houdini /system/bin/enable_houdini
+service nativebridge /system/bin/enable_nativebridge
     class main
+    disabled
     oneshot
 
 service powerbtnd /system/bin/powerbtnd
@@ -177,3 +178,9 @@ on property:net.dns1=*
 
 on property:debug.logcat=1
     class_start debug
+
+on property:persist.sys.nativebridge=1
+    start nativebridge
+
+on property:persist.sys.nativebridge=0
+    stop nativebridge
