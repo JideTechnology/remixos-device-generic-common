@@ -17,14 +17,6 @@ function init_misc()
 
 	# in case no cpu governor driver autoloads
 	[ -d /sys/devices/system/cpu/cpu0/cpufreq ] || modprobe acpi-cpufreq
-
-	case "$PRODUCT" in
-		T10*TA)
-			modprobe ak8975
-			;;
-		*)
-			;;
-	esac
 }
 
 function init_hal_audio()
@@ -45,11 +37,31 @@ function init_hal_bluetooth()
 		[ "$type" = "wlan" -o "$type" = "bluetooth" ] && echo 1 > $r/state
 	done
 
-	# these modules are incompatible with bluedroid
-	rmmod ath3k
-	rmmod btusb
-	rmmod bluetooth
-	set_property ro.rfkilldisabled 1
+	case "$PRODUCT" in
+		T10*TA)
+			modprobe ak8975
+			modprobe hci-uart
+			BTUART_PORT=/dev/ttyS1
+			brcm_patchram_plus -d --no2bytes --enable_hci --patchram /system/lib/firmware/brcm/bcm43241b4.hcd $BTUART_PORT
+			;;
+		MacBookPro8*)
+			rmmod b43
+			modprobe b43 btcoex=0
+			modprobe btusb
+			;;
+		*)
+			for bt in $(lsusb -v | awk ' /Class:.E0/ { print $9 } '); do
+				chown 1002.1002 $bt && chmod 660 $bt
+			done
+			modprobe btusb
+			;;
+	esac
+
+	if [ -n "$BTUART_PORT" ]; then
+		set_property hal.bluetooth.uart $BTUART_PORT
+		chown bluetooth.bluetooth $BTUART_PORT
+		log -t hciconfig -p i "`hciconfig`"
+	fi
 }
 
 function init_hal_camera()
@@ -101,11 +113,9 @@ function init_uvesafb()
 function init_hal_gralloc()
 {
 	case "$(cat /proc/fb | head -1)" in
-		0*inteldrmfb|0*radeondrmfb)
+		0*inteldrmfb|0*radeondrmfb|0*nouveaufb|0*svgadrmfb)
 			set_property ro.hardware.gralloc drm
 			set_drm_mode
-			;;
-		0*svgadrmfb)
 			;;
 		"")
 			init_uvesafb
@@ -205,12 +215,11 @@ function init_hal_sensors()
 			;;
 	esac
 
-	# has sensor-hub?
-	for i in /sys/bus/iio/devices/iio:device?; do
-		busybox chown -R 1000.1000 /sys/bus/iio/devices/iio:device?/
+	# has iio sensor-hub?
+	if [ -n "`ls /sys/bus/iio/devices/iio:device* 2> /dev/null`" ]; then
+		busybox chown -R 1000.1000 /sys/bus/iio/devices/iio:device*/
 		lsmod | grep -q hid_sensor_accel_3d && hal_sensors=hsb || hal_sensors=iio
-		break
-	done
+	fi
 
 	set_property ro.hardware.sensors $hal_sensors
 }
@@ -308,10 +317,6 @@ function do_bootcomplete()
 
 	lsmod | grep -e brcmfmac && setprop wlan.no-unload-driver 1
 
-	for bt in $(lsusb -v | awk ' /Class:.E0/ { print $9 } '); do
-		chown 1002.1002 $bt && chmod 660 $bt
-	done
-
 	case "$PRODUCT" in
 		1866???|1867???|1869???) # ThinkPad X41 Tablet
 			start tablet-mode
@@ -369,7 +374,17 @@ function do_bootcomplete()
 	done
 }
 
-PATH=/system/bin:/system/xbin
+function do_hci()
+{
+	local hci=`hciconfig | grep ^hci | cut -d: -f1`
+	local btd="`getprop init.svc.bluetoothd`"
+	log -t bluetoothd -p i "$btd ($hci)"
+	if [ -n "`getprop hal.bluetooth.uart`" ]; then
+		[ "`getprop init.svc.bluetoothd`" = "running" ] && hciconfig $hci up
+	fi
+}
+
+PATH=/sbin:/system/bin:/system/xbin
 
 DMIPATH=/sys/class/dmi/id
 BOARD=$(cat $DMIPATH/board_name)
@@ -398,6 +413,9 @@ case "$1" in
 		;;
 	bootcomplete)
 		do_bootcomplete
+		;;
+	hci)
+		do_hci
 		;;
 	init|"")
 		do_init

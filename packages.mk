@@ -22,6 +22,7 @@ PRODUCT_PACKAGES := \
     Galaxy4 \
     GlobalTime \
     HoloSpiralWallpaper \
+    Launcher3 \
     LiveWallpapers \
     LiveWallpapersPicker \
     MagicSmokeWallpapers \
@@ -41,6 +42,7 @@ PRODUCT_PACKAGES := \
     hwcomposer.x86 \
     icu.dat \
     io_switch \
+    libGLES_android \
     libhuaweigeneric-ril \
     lights.default \
     make_ext4fs \
@@ -77,4 +79,3 @@ PRODUCT_PACKAGES += \
     CMFileManager \
     Superuser \
     TSCalibration2 \
-    Trebuchet \

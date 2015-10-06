@@ -1,3 +1,4 @@
+import /init.bluetooth.rc
 import /init.superuser.rc
 
 on early-init
@@ -8,7 +9,7 @@ on early-init
     write /sys/module/xt_qtaguid/parameters/ctrl_write_limited N
 
     export force_s3tc_enable true
-#   export EGL_LOG_LEVEL info
+    export EGL_LOG_LEVEL info
 #   export EGL_DRIVERS egl_dri2
 
 on init
@@ -86,7 +87,6 @@ on boot
     setprop sys.media.vdec.drop 0
 
 service wpa_supplicant /system/bin/wpa_supplicant -c/data/misc/wifi/wpa_supplicant.conf \
-    -ddddd \
     -iwlan0 -Dnl80211 \
     -O/data/misc/wifi/sockets \
     -e/data/misc/wifi/entropy.bin -g@android:wpa_wlan0
@@ -172,6 +172,12 @@ on property:system_init.startsurfaceflinger=0
 on property:sys.boot_completed=1
     write /proc/sys/kernel/ctrl-alt-del 0
     exec /system/bin/logwrapper /system/bin/sh /system/etc/init.sh bootcomplete
+
+on property:init.svc.bluetoothd=running
+    exec /system/bin/logwrapper /system/bin/sh /system/etc/init.sh hci
+
+on property:init.svc.bluetoothd=stopped
+    exec /system/bin/logwrapper /system/bin/sh /system/etc/init.sh hci
 
 on property:net.dns1=*
     exec /system/bin/logwrapper /system/bin/sh /system/etc/init.sh netconsole

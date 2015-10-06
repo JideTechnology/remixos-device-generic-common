@@ -6,13 +6,10 @@ TARGET_BOARD_PLATFORM := android-x86
 
 # Some framework code requires this to enable BT
 BOARD_HAVE_BLUETOOTH := true
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/generic/common/bluetooth
-BLUETOOTH_HCI_USE_USB := true
-BOARD_HAVE_BLUETOOTH_BCM := true
 
 BOARD_USE_LEGACY_UI := true
 
-BOARD_SYSTEMIMAGE_PARTITION_SIZE = $(if $(MKSQUASHFS),0,1073741824)
+BOARD_SYSTEMIMAGE_PARTITION_SIZE = $(if $(MKSQUASHFS),0,1610612736)
 
 # customize the malloced address to be 16-byte aligned
 BOARD_MALLOC_ALIGNMENT := 16
@@ -73,8 +70,7 @@ BOARD_WPA_SUPPLICANT_PRIVATE_LIB ?= private_lib_driver_cmd
 WPA_SUPPLICANT_VERSION ?= VER_2_1_DEVEL
 WIFI_DRIVER_MODULE_PATH ?= auto
 
-#BOARD_GPU_DRIVERS ?= i915 i965 ilo r300g r600g nouveau vmwgfx
-BOARD_GPU_DRIVERS ?= i915 i965 swrast r300g r600g
+BOARD_GPU_DRIVERS ?= i915 i965 nouveau r300g r600g radeonsi swrast
 ifneq ($(strip $(BOARD_GPU_DRIVERS)),)
 TARGET_HARDWARE_3D := true
 BOARD_EGL_CFG ?= device/generic/common/gpu/egl_mesa.cfg
