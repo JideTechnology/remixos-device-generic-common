@@ -66,10 +66,6 @@
         <item>12</item> <!-- TYPE_MOBILE_CBS -->
     </integer-array>
 
-    <!-- Sets whether menu shortcuts should be displayed on panel menus when
-                  a keyboard is present. -->
-    <bool name="config_showMenuShortcutsWhenKeyboardPresent">true</bool>
-
     <!-- Whether a software navigation bar should be shown. NOTE: in the future this may be
          autodetected from the Configuration. -->
     <bool name="config_showNavigationBar">true</bool>
