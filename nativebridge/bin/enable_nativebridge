@@ -24,9 +24,9 @@ while [ ! -s $dest_dir/libhoudini.so ]; do
 		sleep 10
 	done
 	if [ -z "$1" ]; then
-		[ "`uname -m`" = "x86_64" ] && cp /system/etc/houdini.tgz .
+		[ "`uname -m`" = "x86_64" ] && cp /system/etc/houdini.tgz . || cp /system/etc/houdini.tgz .
 	else
-		cp /system/etc/etc/houdini_64.tgz
+		cp /system/etc/etc/houdini_64.tgz .
 	fi
 	bzcat houdini.tgz | tar xvf - -C $dest_dir && rm -f houdini.tgz && break
 	rm -f houdini.tgz
