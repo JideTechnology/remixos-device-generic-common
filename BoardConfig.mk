@@ -77,3 +77,6 @@ BOARD_EGL_CFG ?= device/generic/common/gpu/egl_mesa.cfg
 endif
 
 BOARD_KERNEL_CMDLINE := root=/dev/ram0 androidboot.hardware=$(TARGET_PRODUCT)
+
+#@jide disable selinux because we don't have time to fix all rules
+BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
