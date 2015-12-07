@@ -18,7 +18,6 @@
 
 PRODUCT_PACKAGES := \
     BasicSmsReceiver \
-    Development \
     Galaxy4 \
     GlobalTime \
     HoloSpiralWallpaper \
@@ -26,11 +25,9 @@ PRODUCT_PACKAGES := \
     LiveWallpapers \
     LiveWallpapersPicker \
     MagicSmokeWallpapers \
-    NotePad \
     PhaseBeam \
     PinyinIME \
     Provision \
-    RSSReader \
     VisualizationWallpapers \
     camera.x86 \
     chat \
@@ -78,4 +75,3 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     CMFileManager \
     Superuser \
-    TSCalibration2 \
