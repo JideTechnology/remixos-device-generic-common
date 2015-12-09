@@ -28,7 +28,9 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES := \
 
 #@jide
 PRODUCT_PROPERTY_OVERRIDES += \
-   ro.remixos.simulate_wifi=true
+   ro.remixos.simulate_wifi=true \
+   persist.sys.disp_density=160 \
+   ro.sf.lcd_density=160
 
 PRODUCT_COPY_FILES := \
     $(if $(wildcard $(PRODUCT_DIR)init.rc),$(PRODUCT_DIR)init.rc:root/init.rc) \
