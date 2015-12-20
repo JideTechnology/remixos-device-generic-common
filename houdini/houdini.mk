@@ -5,8 +5,6 @@ endif
 HOUDINI := houdini_$(strip $(HOUDINI_HOST_ARCH))_arm
 HOUDINI64 := houdini_x86_64_arm64
 
-$(info $(LOCAL_PATH))
-
 ifeq ($(strip $(HOUDINI_PREINSTALL)),true)
     LOCAL_HOUDINI_PATH := device/generic/common/houdini
     LOCAL_HOUDINI_LIB_PATH := $(LOCAL_HOUDINI_PATH)/$(HOUDINI)
