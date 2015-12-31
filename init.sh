@@ -394,7 +394,7 @@ PRODUCT=$(cat $DMIPATH/product_name)
 # import cmdline variables
 for c in `cat /proc/cmdline`; do
 	case $c in
-		androidboot.hardware=*)
+		androidboot.*=*)
 			;;
 		*=*)
 			eval $c

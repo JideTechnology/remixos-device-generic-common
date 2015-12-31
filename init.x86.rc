@@ -152,6 +152,8 @@ service fuse_usb3 /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d /mnt/media_rw/us
 service logcat /system/bin/logcat -v threadtime -f /data/log.txt
     class debug
 
+service logcat_console /system/bin/logcat -Q
+
 service wacom-input /system/bin/wacom-input
     disabled
     oneshot
@@ -184,6 +186,9 @@ on property:net.dns1=*
 
 on property:debug.logcat=1
     class_start debug
+
+on property:ro.boot.console=*
+    start logcat_console
 
 on property:persist.sys.nativebridge=1
     start nativebridge
