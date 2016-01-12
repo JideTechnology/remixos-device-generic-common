@@ -1,3 +1,7 @@
+ifeq ($(strip $(HOUDINI_HOST_ARCH)),)
+    $(error HOUDINI_HOST_ARCH not defined)
+endif
+
 ifneq ($(filter $(strip $(HOUDINI_HOST_ARCH)),x86 x86_64),$(HOUDINI_HOST_ARCH))
     $(error must defined HOUDINI_HOST_ARCH to one of (x86, x86_64) before including houdini.mk)
 endif

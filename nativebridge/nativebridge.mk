@@ -15,9 +15,17 @@ WITH_NATIVE_BRIDGE := true
 NATIVE_BRIDGE_ABI_LIST_32_BIT := armeabi-v7a armeabi
 NATIVE_BRIDGE_ABI_LIST_64_BIT := arm64-v8a
 
+ifeq ($(strip $(HOUDINI_HOST_ARCH)),)
+    $(error HOUDINI_HOST_ARCH not defined)
+endif
+
+ifneq ($(filter $(strip $(HOUDINI_HOST_ARCH)),x86 x86_64),$(HOUDINI_HOST_ARCH))
+    $(error must defined HOUDINI_HOST_ARCH to one of (x86, x86_64) before including nativebridge.mk)
+endif
+
 LOCAL_SRC_FILES := bin/enable_nativebridge
 
-ifneq ($(filter %x86_64/,$(PRODUCT_DIR)),)
+ifeq ($(strip $(HOUDINI_HOST_ARCH)),x86_64)
 
 LOCAL_SRC_FILES += $(subst $(LOCAL_PATH)/,,$(shell find $(LOCAL_PATH)/lib64/arm64 -type f))
 
