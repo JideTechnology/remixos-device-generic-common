@@ -109,7 +109,9 @@ $(call inherit-product-if-exists,hardware/libsensors/sensors.mk)
 $(call inherit-product,frameworks/native/build/tablet-10in-xhdpi-2048-dalvik-heap.mk)
 
 # Get GMS
+ifeq ($(BUILD_REMIXOS_WITH_INTEL_GMS),true)
 $(call inherit-product-if-exists,vendor/google/gms/products/intel_gms.mk)
+endif
 
 # Get native bridge settings
 $(call inherit-product-if-exists,$(LOCAL_PATH)/nativebridge/nativebridge.mk)
